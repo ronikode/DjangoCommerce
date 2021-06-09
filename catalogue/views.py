@@ -1,12 +1,13 @@
-from django.http import HttpResponse
+"""View based to catalogue."""
+
+# Django libraries
 from django.shortcuts import render
 
-
-# Create your views here.
 
 # VBF
 def catalogue(request):
     # TODO: Logic
-    return HttpResponse("Holaaaa!!!")
+    title: str = "Empresa online"
+    return render(request, 'catalogue/index.html', {"title_b": title})
 
 # VBC

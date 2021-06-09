@@ -28,8 +28,9 @@
  DELETE
  - ItemModel.objects.filter(stock=False).delete()
 
+### CREAR SUPERUSER
 
-
+    - `python manage.py createsuperuser`
 
 ## MIGRACIONES
 
@@ -40,3 +41,7 @@
  - MIGRATE:
 
     `python manage.py migrate <name-app>`
+
+ - MUESTRA ESTADO DE MIGRACIONES:
+
+    `python manage.py showmigrations`
