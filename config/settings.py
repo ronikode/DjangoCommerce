@@ -103,8 +103,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
+PATH_STATIC = BASE_DIR / "config/static"
 STATICFILES_DIRS = [
-    BASE_DIR / "config/static"
+    str(PATH_STATIC)
 ]
 # STATIC_ROOT = BASE_DIR / 'config/static'
 
