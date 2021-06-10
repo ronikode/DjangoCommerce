@@ -35,7 +35,7 @@ class ItemModel(models.Model):
     photo = models.ImageField(upload_to="item/", verbose_name="Foto", help_text="Foto principal del item.")
     description = models.TextField(verbose_name="Descripción", help_text="Descripción del item.", blank=True,
                                    default="")
-    stock = models.BooleanField(default=True, verbose_name="Stock")
+    stock = models.BooleanField(default=True, verbose_name="Stock", db_column="existe")
 
     def __str__(self) -> str:
         return f"[{self.sku}] {self.name}"

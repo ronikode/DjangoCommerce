@@ -5,7 +5,7 @@ from django.shortcuts import render
 
 
 # VBF
-def catalogue(request):
+def index(request):
     # TODO: Logic
     title: str = "Empresa online"
     return render(request, 'catalogue/index.html', {"title_b": title})
