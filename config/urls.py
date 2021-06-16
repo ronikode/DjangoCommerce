@@ -25,5 +25,6 @@ admin.site.index_title = "Administración Store"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include("catalogue.urls"))  # '/'
+    path('', include("catalogue.urls", namespace='catalogue')),  # '/'
+    path('customers/', include("customers.urls", namespace='customers'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

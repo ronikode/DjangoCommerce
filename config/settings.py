@@ -32,6 +32,7 @@ INSTALLED_APPS = [
 
     # LOCAL APPS
     'catalogue.apps.CatalogueConfig',
+    'customers',
 ]
 
 MIDDLEWARE = [
