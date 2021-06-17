@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib import messages
 
@@ -68,4 +68,14 @@ def customers_edit(request, identifier: int):
                 messages.error(request, "Error al editar un cliente")
     return render(request, "customers/update.html", {"form": form})
 
+
 # BORRAR
+def customers_delete(request, id: int):
+    customer = get_object_or_404(CustomerModel, id=id, status=True)
+
+    # CRITERIOS PARA BORRAR
+    customer.deleted_at = datetime.now()
+    customer.status = False
+    customer.save()
+    messages.success(request, "Cliente ha sido eliminado exitosamente.")
+    return redirect(reverse_lazy("customers:customers_list"))
