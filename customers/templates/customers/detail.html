@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Detalle de Cliente</title>
 </head>
 <body>
-
+    <h1>Información del cliente</h1>
+    {% if customer %}
+        <h5>Nombre: {{ customer.full_name }}</h5>
+        <h6>DNI: {{ customer.dni }}</h6>
+    {% else %}
+        <p>Cliente no encontrado</p>
+    {% endif %}
 </body>
 </html>
