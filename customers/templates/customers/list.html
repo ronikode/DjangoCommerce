@@ -4,14 +4,27 @@
     <meta charset="UTF-8">
     <title>Listado de clientes</title>
 </head>
+<style>
+    .message{
+        background: green;
+    }
+</style>
 <body>
-    <h2>Todos los Clientes</h2>
+<h2>Todos los Clientes</h2>
 
-    {% for c in customers %}
-        {{ c.full_name }}
-    {% empty %}
-        <p>No se encuentra registros</p>
-    {% endfor %}
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% for c in customers %}
+    {{ c.full_name }}
+{% empty %}
+    <p>No se encuentra registros</p>
+{% endfor %}
 
 </body>
 </html>
