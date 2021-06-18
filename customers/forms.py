@@ -21,6 +21,6 @@ class BasicCustomerForm(forms.ModelForm):
 
     def clean_dni(self):
         dni = self.cleaned_data.get("dni")
-        if len(dni) < 10 and validation_sri_dni(dni):
+        if len(dni) < 10:
             raise ValidationError("Error No. de Identificación incorrecto")
         return dni

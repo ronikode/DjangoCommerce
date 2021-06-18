@@ -10,7 +10,6 @@ from catalogue.models import ItemModel
 
 # VBF
 def index(request):
-    # TODO: Logic
     title: str = "Empresa online"
     categories = CategoryModel.objects.order_by('name')  # Lista todas las categorías de bd ordenadas asc por nombre
     items = ItemModel.objects.filter(stock=True).order_by('name')  # Lista todos los productos disponibles

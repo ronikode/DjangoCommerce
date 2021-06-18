@@ -35,7 +35,10 @@ def customers_create(request):
             # customer.full_name = data.get('full_name')
             # customer.dni = data.get('dni')
             # customer.save()
-            CustomerModel.objects.create(full_name=data.get("full_name"), dni=data.get("dni"))  # ORM
+            CustomerModel.objects.create(
+                full_name=data.get("full_name"), dni=data.get("dni"),
+                created_by=request.user
+            )
             messages.success(request, "Cliente registrado exitosamente.")
             return redirect(reverse_lazy("customers:customers_list"))
         else:
@@ -60,7 +63,9 @@ def customers_edit(request, identifier: int):
                 data = form.cleaned_data
                 customer.full_name = data.get("full_name")
                 customer.dni = data.get("dni")
+
                 customer.modified_at = datetime.now()
+                customer.modified_by = request.user
                 customer.save()
                 messages.success(request, "Cliente modificado exitosamente.")
                 return redirect(reverse_lazy("customers:customers_list"))
