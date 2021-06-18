@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib import messages
@@ -16,6 +17,7 @@ def customers_list(request):
 
 
 # OBTENER
+@login_required(login_url='/security/login/')
 def customer_detail(request, identifier: int):
     try:
         customer = CustomerModel.objects.get(id=identifier)
@@ -25,6 +27,7 @@ def customer_detail(request, identifier: int):
 
 
 # CREAR
+@login_required(login_url='/security/login/')
 def customers_create(request):
     form = BasicCustomerForm()
     if request.method == "POST":
@@ -47,6 +50,7 @@ def customers_create(request):
 
 
 # ACTUALIZAR
+@login_required(login_url='/security/login/')
 def customers_edit(request, identifier: int):
     # 1. Obtener el registro a editar.
     try:
@@ -75,6 +79,7 @@ def customers_edit(request, identifier: int):
 
 
 # BORRAR
+@login_required(login_url='/security/login/')
 def customers_delete(request, id: int):
     customer = get_object_or_404(CustomerModel, id=id, status=True)
 
