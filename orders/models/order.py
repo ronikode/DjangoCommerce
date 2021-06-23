@@ -1,6 +1,10 @@
 """"""
 
 from django.db import models
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+
+from orders.models.sequence import SequenceModel
 
 
 class OrderModel(models.Model):
@@ -65,7 +69,7 @@ class OrderModel(models.Model):
         default=0, max_digits=9, decimal_places=2, verbose_name="IVA 12"
     )
     total = models.DecimalField(
-        default=0, verbose_name="Total", help_text="Total del orden."
+        default=0, verbose_name="Total", help_text="Total del orden.", max_digits=9, decimal_places=2
     )
     total_items = models.IntegerField(
         verbose_name="Total de items",
@@ -81,3 +85,16 @@ class OrderModel(models.Model):
 
     def __str__(self):
         return f"{self.code}"
+
+
+@receiver(pre_save, sender=OrderModel)
+def set_code(sender, instance, **kwargs):
+    index = 0
+    sequence = SequenceModel.objects.all().first()
+    if sequence:
+        index = sequence.current + 1
+        sequence.current = index
+        sequence.save(update_fields=["current"])
+    reference = str(index)
+    end_code = f"DC{reference.zfill(4)}"  # -> DC00001, DC00002, DC00003
+    instance.code = end_code
