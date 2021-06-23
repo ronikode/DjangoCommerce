@@ -81,5 +81,3 @@ class OrderModel(models.Model):
 
     def __str__(self):
         return f"{self.code}"
-
-    # TODO:
