@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.db import transaction
 
 from customers.forms import BasicCustomerForm
 # Import customer model
@@ -33,17 +34,18 @@ def customers_create(request):
     if request.method == "POST":
         form = BasicCustomerForm(request.POST)
         if form.is_valid():
-            data = form.cleaned_data  # -> dict {"full_name": <>, "dni": <>}
-            # customer = CustomerModel()
-            # customer.full_name = data.get('full_name')
-            # customer.dni = data.get('dni')
-            # customer.save()
-            CustomerModel.objects.create(
-                full_name=data.get("full_name"), dni=data.get("dni"),
-                created_by=request.user
-            )
-            messages.success(request, "Cliente registrado exitosamente.")
-            return redirect(reverse_lazy("customers:customers_list"))
+            with transaction.commit():
+                data = form.cleaned_data  # -> dict {"full_name": <>, "dni": <>}
+                # customer = CustomerModel()
+                # customer.full_name = data.get('full_name')
+                # customer.dni = data.get('dni')
+                # customer.save()
+                CustomerModel.objects.create(
+                    full_name=data.get("full_name"), dni=data.get("dni"),
+                    created_by=request.user
+                )
+                messages.success(request, "Cliente registrado exitosamente.")
+                return redirect(reverse_lazy("customers:customers_list"))
         else:
             messages.error(request, "Error al crear un cliente")
     return render(request, 'customers/create.html', {"form": form})
