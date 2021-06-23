@@ -96,5 +96,5 @@ def set_code(sender, instance, **kwargs):
         sequence.current = index
         sequence.save(update_fields=["current"])
     reference = str(index)
-    end_code = f"DC{reference.zfill(4)}"  # -> DC00001, DC00002, DC00003
+    end_code = f"DC{reference.zfill(5)}"  # -> DC00001, DC00002, DC00003
     instance.code = end_code
