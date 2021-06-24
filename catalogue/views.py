@@ -14,9 +14,14 @@ def index(request):
     items = ItemModel.objects.filter(stock=True).order_by('name')  # Lista todos los productos disponibles
     categories = CategoryModel.objects.order_by('name')  # Lista todas las categorías de bd ordenadas asc por nombre
     param = request.GET.get("search", None)
-    if param:
+    param_category = request.GET.get("search-category", None)  # Category.id
+    if param or param_category:
         # Q(question__startswith='Who') | Q(question__startswith='What')
-        items = items.filter(Q(name__icontains=param) | Q(category__name__icontains=param))
+        items = items.filter(
+            Q(name__icontains=param)
+            | Q(category__name__icontains=param)
+            | Q(category__pk__exact=int(param_category))
+        )
     return render(request, 'catalogue/index.html', {'categories': categories, "items": items})
 
 
@@ -31,3 +36,11 @@ def category_items(request, category_slug=None):
         flag = False
         message = "No existe intems asociados a esa categoría"
     return render(request, '', {"filtered_items": filtered_items, "flag": flag, "message": message})
+
+
+def item_detail(request, id: int):
+    try:
+        item = ItemModel.objects.get(id=id)
+    except ItemModel.DoesNotExist:
+        item = None
+    return render(request, "catalogue/item_detail.html", {"item": item})
