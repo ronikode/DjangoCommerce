@@ -1,6 +1,7 @@
 """View based to catalogue."""
 
 # Django libraries
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 
 # Models
@@ -10,10 +11,13 @@ from catalogue.models import ItemModel
 
 # VBF
 def index(request):
-    title: str = "Empresa online"
-    categories = CategoryModel.objects.order_by('name')  # Lista todas las categorías de bd ordenadas asc por nombre
     items = ItemModel.objects.filter(stock=True).order_by('name')  # Lista todos los productos disponibles
-    return render(request, 'catalogue/index.html', {"title_b": title, 'categories': categories, "items": items})
+    categories = CategoryModel.objects.order_by('name')  # Lista todas las categorías de bd ordenadas asc por nombre
+    param = request.GET.get("search", None)
+    if param:
+        # Q(question__startswith='Who') | Q(question__startswith='What')
+        items = items.filter(Q(name__icontains=param) | Q(category__name__icontains=param))
+    return render(request, 'catalogue/index.html', {'categories': categories, "items": items})
 
 
 def category_items(request, category_slug=None):

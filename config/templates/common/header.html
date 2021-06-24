@@ -3,7 +3,7 @@
 <!-- Header -->
 <header class="header shop">
 
-{#    {% categories_menu %}#}
+    {#    {% categories_menu %}#}
     <!-- Topbar -->
     <div class="topbar">
         <div class="container">
@@ -31,7 +31,8 @@
                                     Cerrar sesión</a>
                                 </li>
                             {% else %}
-                                <li><i class="ti-power-off"></i><a href="{% url 'users:login' %}">Iniciar sesión</a></li>
+                                <li><i class="ti-power-off"></i><a href="{% url 'users:login' %}">Iniciar sesión</a>
+                                </li>
                             {% endif %}
 
                         </ul>
@@ -68,17 +69,21 @@
                 </div>
                 <div class="col-lg-8 col-md-7 col-12">
                     <div class="search-bar-top">
-                        <div class="search-bar">
-                            <select>
-                                <option selected="selected">All Category</option>
-                                <option>watch</option>
-                                <option>mobile</option>
-                                <option>kid’s item</option>
-                            </select>
-                            <form>
-                                <input name="search" placeholder="Search Products Here....." type="search">
-                                <button class="btnn"><i class="ti-search"></i></button>
+                        <div>
+                            <form class="search-bar" method="get" action=".">
+                                {# Capturar el criterio de busqueda y enviar al controlador #}
+                                <select name="search-category">
+                                    <option selected="selected">Categorías</option>
+                                    {% for category in categories %}
+                                        <option value="{{ category.name }}">{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+
+                                <input name="search" placeholder="Buscar productos" type="search"/>
+
+                                <button type="submit" class="btnn"><i class="ti-search"></i></button>
                             </form>
+                            {# Fin del formulario de consulta #}
                         </div>
                     </div>
                 </div>
@@ -140,7 +145,7 @@
                         <div class="all-category">
                             <h3 class="cat-heading"><i class="fa fa-bars" aria-hidden="true"></i>CATEGORÍAS</h3>
                             <ul class="main-category">
-                                {%  for cat in categories %}
+                                {% for cat in categories %}
                                     <li>
                                         <a href="#">{{ cat.name }}</a>
                                     </li>
