@@ -1,7 +1,7 @@
 """"""
-
+from django.core.mail import EmailMultiAlternatives
 from django.db import models
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 
 from orders.models.sequence import SequenceModel
@@ -98,3 +98,15 @@ def set_code(sender, instance, **kwargs):
     reference = str(index)
     end_code = f"DC{reference.zfill(5)}"  # -> DC00001, DC00002, DC00003
     instance.code = end_code
+
+
+@receiver(post_save, sender=OrderModel)
+def notification_email(sender, instance, **kwargs):
+    # instance.customer.email
+    email = "rnoboa22@gmail.com"
+    subject, from_email, to = 'Notificacion de Orden', 'admin@mitienda.com', email
+    text_content = f'Order creada exitosamente.'
+    html_content = f'<p>{instance.code}, gracias por tu compra.</p>'
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()

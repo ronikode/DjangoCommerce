@@ -13,5 +13,7 @@ def order_create(request):
         if form.is_valid():
             with transaction.atomic():
                 order = form.save()  # Basado en un model Form de OrderModel puedo guardar en base datos.
+                message = f"Orden {order.code} ha sido creada exitosamente"
                 messages.success(request, "Orden creada exitosamente.")
+                return render(request, "orders/created.html", {"message": message})
     return render(request, "orders/order_create.html", {'form': form})

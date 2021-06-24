@@ -75,11 +75,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dbcurso',          # NOMBRE DE LA BD
-        'USER': 'postgres',         # USERNAME DEL SERVIDOR DE BASE DE DATOS POSTGRES
-        'PASSWORD': '123456',       # CLAVE DEL SERVIDOR DE BASE DE DATOS POSTGRES
+        'NAME': 'dbcurso',  # NOMBRE DE LA BD
+        'USER': 'postgres',  # USERNAME DEL SERVIDOR DE BASE DE DATOS POSTGRES
+        'PASSWORD': '123456',  # CLAVE DEL SERVIDOR DE BASE DE DATOS POSTGRES
         'HOST': 'localhost',
-        'PORT': '5432',             # PUERTO PARA ACCEDER AL SERVIDOR DE BASE DE DATOS PORSTGRES
+        'PORT': '5432',  # PUERTO PARA ACCEDER AL SERVIDOR DE BASE DE DATOS PORSTGRES
     }
 }
 
@@ -121,3 +121,16 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# EMAILs
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = "domainserver"
+# EMAIL_PORT = 23
+# EMAIL_HOST_USER =
+# EMAIL_HOST_PASSWORD =
+# EMAIL_USE_TLS =
+# EMAIL_USE_SSL =
+# EMAIL_TIMEOUT =
+# EMAIL_SSL_KEYFILE =
+# EMAIL_SSL_CERTFILE =
