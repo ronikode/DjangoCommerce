@@ -29,6 +29,7 @@ INSTALLED_APPS = [
 
     # THIRD APPS
     'import_export',
+    'crispy_forms',
 
     # LOCAL APPS
     'catalogue.apps.CatalogueConfig',
@@ -36,7 +37,7 @@ INSTALLED_APPS = [
     'users',
     'orders'
 ]
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

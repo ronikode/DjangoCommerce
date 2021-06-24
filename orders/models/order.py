@@ -35,7 +35,7 @@ class OrderModel(models.Model):
         "customers.CustomerModel",
         on_delete=models.PROTECT,
         help_text="Cliente",
-        related_name="customer_orders"
+        related_name="customer_orders", verbose_name="Cliente"
     )
     billing_address = models.CharField(
         verbose_name="Dirección", help_text="Dirección de facturación", max_length=220)
