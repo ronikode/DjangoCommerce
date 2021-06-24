@@ -1,4 +1,7 @@
 """"""
+import datetime
+import uuid
+
 from django.core.mail import EmailMultiAlternatives
 from django.db import models
 from django.db.models.signals import pre_save, post_save
@@ -85,6 +88,15 @@ class OrderModel(models.Model):
 
     def __str__(self):
         return f"{self.code}"
+
+
+def generate_unique_code():
+    """Function that generate unique code"""
+    # .strftime("%Y-%m-%d-%H-%S-%f")
+    frame = datetime.datetime.now().strftime("%S%f")  # Dado una fecha actual (objeto datetime)
+    code = str(uuid.uuid4()).split("-")
+    unique_code = f"{code[0]}{frame}"
+    return unique_code
 
 
 @receiver(pre_save, sender=OrderModel)
